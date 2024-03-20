@@ -2,7 +2,7 @@
     <div v-if="job">
         <h1>{{ job.title }}</h1>
         <p> The Job Id is: {{ id }}</p>
-        <p>{{ Job.details }}</p>
+        <p>{{ job.details }}</p>
     </div>
     <div v-else>
         <p>Loading job details .....</p>
@@ -13,13 +13,23 @@
     export default {
         props: ['id'],
         data() {
-            job: null
+            return{
+             job: null
+            }
         },
         mounted() {
             fetch('http://localhost:3000/jobs/'+ this.id)
-            .then(res => res.json())
-            .then(data => this.job = data)
+            .then( (res) =>{
+                console.log(res)
+                res.json()
+                .then((data) => {
+                    this.job = data
+                })
+            })
+            // .then(res => res.json())
+            // .then(data => data = this.job)
             .catch( err => console.log(err.message))
+            
         }
         
     }
